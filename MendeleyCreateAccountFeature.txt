@@ -1,0 +1,125 @@
+Feature: New user creation for mendeley.com
+As a user I want to create a new account for Mendeley.com
+
+
+@Scenario1
+  Scenario Outline: Verify that user cannot continue to the second create account page without filling first page mandatory fields
+    Given I am on mendeley.com homepage
+    When I select create account
+    Then I should be on the "first" create account page with mandatory fields
+    When I select continue without filling in the "<mandatory field>" on first page
+    Then I should see an error message on "<mandatory field>" on first page
+    And I should remain on the "first" page
+    When I fill in all mandatory fields on the first create account page
+    And I select  continue
+    Then I should be on the "second" create account page with mandatory fields
+Examples: 
+      | first page mandatory field |
+      | first name                 |
+      | last name                  |
+      | password                   |
+      | email address              |
+
+
+ @Scenario2
+Scenario outline: Verify that user cannot create account without filling second page mandatory fields
+Background: User has completed first create account page with valid user credentials
+
+Given I am on the "second" create account page
+When I select create account without filling in the "<mandatory field>" on "second" page
+Then I should see an error message
+And I should remain on the same page
+
+Examples:
+         |second page mandatory field  |
+         | field of study              |
+         | Academic  status            |
+               
+         
+                             
+
+
+
+
+
+@scenario3
+Scenario Outline: Verify that user can create an account succesfully with valid user details 
+ 
+Given I am on mendeley homepage
+When I select create account
+Then I should see the first create account page with  <first page mandatory field> fields
+When I fill in the <first page mandatory field> fields on the first create account page 
+And I select on continue
+Then I should see the second create account page with  <second page mandatory field> fields
+when I fill in the <second page mandatory field> fields on the second create account page 
+And I select create account
+Then I should see the new user landing page 
+And user should be logged in automatically
+
+Example: |first page mandatory field|Page two mandatory options|
+         | first name              | field of study           |
+         |last name                | Academic  status         |
+         |password                 |          
+         |email address            |
+
+
+
+
+@Scenario4
+Scenario:Verify that new account cannot be created with existing user credentials
+Given I am on mendeley homepage
+When I select create account
+Then I should see the first create account page 
+When I fill in the email address field with an existing user email address
+Then I should see an error message with sign in option 
+
+
+
+
+@Scenario5
+Scenario: Verify that new account cannot be created with an invalid email address
+
+Given I am on mendeley homepage
+When I select create account
+Then I should see the first create account page 
+When I enter invalid email address in the email address field
+And I navigate outside the email address field
+Then I should see an error message 
+#indicating user has entered an invalid email address
+ 
+
+
+@Scenario6
+Scenario: Verify that new account cannot be created with an invalid email address
+
+Given I am on mendeley homepage
+When I select create account
+Then I should see the first create account page 
+When I enter invalid email address in the email address field
+And I navigate outside the email address field
+Then I should see an error message 
+#indicating user has entered an invalid email address
+ 
+
+@Scenario5
+
+Scenario: Verify that new account cannot be created with an invalid password
+
+Given I am on mendeley homepage
+When I select create account
+Then I should see the first create account page 
+When I enter invalid password in the password field
+And I navigate outside the password field
+Then I should see an error message 
+#indicating user has entered an invalid password
+ 
+
+
+
+
+
+
+
+
+
+
